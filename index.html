@@ -41,9 +41,17 @@
       app.component("login-form", {
         template: `
           <form @submit.prevent="handleSubmit">
+            <div v-for="name in names">{{name}}</div>
             <h2>{{formTitle}}</h2>
-            <custom-input  v-model='username'  v-bind:label="emailLabel" /><br/>
-            <custom-input v-model='password' :label="passwordLabel" /><br/>
+            <custom-input 
+              v-for="(input,index) in inputs" 
+              :key="index"
+              v-model='input.value'  
+              :label="input.label"
+              :placeholder="input.placeholder" 
+              :type="input.type"
+            />
+          
             <button>Login</button>
           </form>
         `,
@@ -51,10 +59,20 @@
         data() {
           return {
             formTitle: "[Login Form]",
-            username:'',
-            password:'',
-            emailLabel:'E-Mail',
-            passwordLabel:'Password',
+            inputs:[
+              {
+                label:'E-Mail:',
+                value:'',
+                type:'email',
+                placeholder:'Enter a valid email'
+              },
+               {
+                label:'Password:',
+                value:'',
+                type:'password',
+                placeholder:'Enter password'
+              }
+            ]
             
           };
         },
@@ -63,7 +81,7 @@
 
         methods: {
           handleSubmit() {
-            console.log("Login: ", this.username, this.password);
+            console.log(this.inputs[0].value,this.inputs[1].value);
           }
         }
       });
@@ -74,11 +92,11 @@
           <label>
             {{label}}
             <p>
-              <input type={{type}} v-model="inputValue"/>
+              <input :type="type" v-model="inputValue" :placeholder="placeholder"/>
             </p>
           </label>
         `,
-        props:['label', 'modelValue'],
+        props:['label','type','placeholder', 'modelValue'],
         computed:{
           inputValue:{
             get(){
