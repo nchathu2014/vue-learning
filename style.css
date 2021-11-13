@@ -18,3 +18,18 @@
 [v-cloak]{
   display: none;
 }
+
+
+.box {
+  width: 100px;
+  height: 100px;
+  background-color: aqua;
+}
+
+input[type="text"],
+input[type="password"] {
+  padding: 5px;
+  border: 1px solid black;
+  border-radius: 5px;
+
+}
